@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Controller
 public class EmailController {
@@ -24,6 +27,11 @@ public class EmailController {
         BeanUtils.copyProperties(emailDTO, emailModel);
         emailService.sendingnEmail(emailModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(emailModel);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<EmailModel>> listAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(emailService.findAll());
     }
 
 

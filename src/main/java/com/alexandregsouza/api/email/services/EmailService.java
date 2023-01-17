@@ -16,12 +16,12 @@ import java.util.Optional;
 @Service
 public class EmailService {
     @Autowired
-    EmailRepository emailRepository;
+    private EmailRepository emailRepository;
 
     @Autowired
     private JavaMailSender emailSender;
 
-    public EmailModel sendingnEmail(EmailModel emailModel) {
+    public void sendingnEmail(EmailModel emailModel) {
         emailModel.setLocalDateTime(LocalDateTime.now());
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -34,7 +34,7 @@ public class EmailService {
         } catch (MailException e) {
             emailModel.setStatusEmail(StatusEmail.ERROR);
         }
-        return emailRepository.save(emailModel);
+        emailRepository.save(emailModel);
     }
 
     public List<EmailModel> findAll() {
